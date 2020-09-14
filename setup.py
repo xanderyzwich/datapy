@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
     name='datapy',
-    pachages=['datapy'],
+    packages=['datapy'],
     version='0.1',
     license='apache-2.0',
     description='An intuitive lightweight file based database and query tool.',
@@ -14,8 +14,11 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Query Tools',
-        'License :: OSI Approved :: apache-2.0',
+        'Topic :: Database',
+        'Environment :: Console',
+        'Natural Language :: English',
+        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3',
+        'Operating System :: OS Independent'
     ],
 )
