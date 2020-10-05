@@ -1,0 +1,12 @@
+name::text,number::integer,date::text
+Adam,1,2020-01-01
+Frank,2,2020-01-02
+Jennifer,3,2020-01-03
+Peter,4,2020-01-04
+Mary,5,2020-01-05
+Ryan,6,2020-01-06
+Tammy,7,2020-01-07
+Gregory,8,2020-01-08
+Lilliana,9,2020-01-09
+Tom,10,2020-01-10
+Sue,11,2020-01-11
