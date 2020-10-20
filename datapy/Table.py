@@ -132,10 +132,10 @@ class Table(Schema):
             headers (str): table headers in string format -
                            "field::type,field::type"
             file_conn (TextIOWrapper): file connection
-                  this is the text stream opened in with statement on line 112
         Returns:
             int: number of records inserted
         """
+        # file_conn is the text stream opened in with statement on line 112
         types = [h.split("::")[1] for h in headers.split(",")]
         headers = [h.split("::")[0] for h in headers.split(",")]
         reader = csv.DictReader(file_conn, fieldnames=headers)
