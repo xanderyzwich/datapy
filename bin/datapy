@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ ! $@ ]]; then
-   python3 -m datapy -h
+    echo "Not yet implemented..." && exit 1
+    python3 -m datapy -h
 else
    python3 -m datapy $@
 fi

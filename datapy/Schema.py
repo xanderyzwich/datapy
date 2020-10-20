@@ -46,4 +46,6 @@ class Schema:
         """ Deletes a schema defined in schema path
             Don't have a good implementation of this yet.
         """
+        # a soft delete could possibly use .rm file to mark dir/schema/table
+        # as deleted and ignore it and children
         pass

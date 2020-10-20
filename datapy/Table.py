@@ -17,7 +17,7 @@ class Table(Schema):
     Args:
         schema_name (Schema object): the name of the schema to place the file
         input_data (str): the path to an input file
-        table_name (str): name of table to access
+        table_db (str): name of table to access
     """
     def __init__(self, schema_name, input_data=None, table_db=None):
         super().__init__(schema_name)
@@ -44,12 +44,15 @@ class Table(Schema):
     @property
     def table_root(self):
         """ We need all functions to be able to access the table, so we add it as a property """
+        # if using a csv file for a table that didn't already exist then
+        # we should create a .db file
         if self.table_db == None:
             outfile = str(self.table_name) + '.db'
             table_root = os.path.join(self.schema_path, outfile)
             return table_root
         else:
-            return os.path.join(self.schema_path, self.table_db)
+            table = os.path.basename(table_db)
+            return os.path.join(self.schema_path, table)
     
     @staticmethod
     def db_session(table_root):
@@ -65,6 +68,7 @@ class Table(Schema):
         Returns:
             sql.Connection: connection to the database
         """
+        # if db file exists already
         if os.path.isfile(table_root):
             conn = sql.connect(":memory:")
             sql_file = open(table_root)
@@ -128,7 +132,7 @@ class Table(Schema):
             headers (str): table headers in string format -
                            "field::type,field::type"
             file_conn (TextIOWrapper): file connection
-
+                  this is the text stream opened in with statement on line 112
         Returns:
             int: number of records inserted
         """
@@ -142,6 +146,7 @@ class Table(Schema):
                 f"insert into {self.table_name} ({','.join(headers)}) "
                 f"values ({','.join(['?']*len(headers))});"
                 )
+            # should we check the length of headers against the length of vals?
             c.execute(insert_stmt, tuple(row.values()))
             rows_inserted += 1
         return rows_inserted
@@ -160,6 +165,8 @@ class Table(Schema):
             print(self.table_name)
             try:
                 c.execute(f"select * from {self.table_name}")
+                # I would like this to call another function that allows for args
+                # so that we aren't implementing hardcoded selects in multiple places
                 return c.fetchall()
             except Exception as e:
                 print(e)
@@ -172,6 +179,9 @@ class Table(Schema):
             conn (sql.Connection): connection to the database
         Returns: None
         """
+        # perhaps this should mention that it is for dumping in memory tables to a file
+        # additionally this might also want to create the file for the table that could
+        # be used later, need Eric's feedback on that
         with open(self.table_root, 'w') as f:
             for line in conn.iterdump():
                 f.write(f'{line}\n')
