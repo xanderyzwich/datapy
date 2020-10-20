@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Schema creator class for datapy.
+Schema class for datapy.
 """
+
 import os
 import sys
 
@@ -28,8 +29,21 @@ class Schema:
         else:
             return os.getcwd()
 
-    def create_schema(self):
-        """ Creates a schema in schema root.
+    @property
+    def schema_path(self):
+        """ Sets schema path and adds it to the class
         """
-        path = os.path.join(self.schema_root, self.schema_name)
-        os.makedirs(path)
+        schema_path = os.path.join(self.schema_root, self.schema_name)
+        return schema_path
+
+    def create_schema(self):
+        """ creates the schema defined in schema path
+        """
+        if not os.path.isdir(self.schema_path):
+            os.makedirs(self.schema_path)
+
+    def delete_schema(self):
+        """ Deletes a schema defined in schema path
+            Don't have a good implementation of this yet.
+        """
+        pass
